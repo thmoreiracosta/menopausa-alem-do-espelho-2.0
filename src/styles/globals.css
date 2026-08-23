@@ -1,0 +1,128 @@
+@import "tailwindcss";
+@import "./theme.css";
+
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&display=swap");
+
+:root {
+  font-family: var(--font-sans);
+  color: var(--color-text);
+  background: var(--color-background);
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  background: var(--color-background);
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+::selection {
+  background: var(--color-accent);
+  color: white;
+}
+
+/* =========================
+   UTILITÁRIOS EDITORIAIS
+   ========================= */
+
+.font-display {
+  font-family: var(--font-display);
+}
+
+.paper-grid {
+  background-image:
+    linear-gradient(
+      rgba(24, 55, 47, 0.045) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      rgba(24, 55, 47, 0.045) 1px,
+      transparent 1px
+    );
+
+  background-size: 38px 38px;
+}
+
+.hero-shade {
+  background:
+    linear-gradient(
+      90deg,
+      rgba(18, 52, 45, 0.98) 0%,
+      rgba(18, 52, 45, 0.88) 42%,
+      rgba(18, 52, 45, 0.25) 75%,
+      rgba(18, 52, 45, 0.15) 100%
+    );
+}
+
+.card-lift {
+  transition:
+    transform 0.35s ease,
+    box-shadow 0.35s ease;
+}
+
+.card-lift:hover {
+  transform: translateY(-7px);
+  box-shadow: var(--shadow-card-hover);
+}
+
+.focus-ring:focus-visible {
+  outline: 3px solid var(--color-accent);
+  outline-offset: 4px;
+}
+
+.nav-item {
+  position: relative;
+}
+
+.nav-item::after {
+  content: "";
+  position: absolute;
+  bottom: -6px;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform 0.2s ease;
+}
+
+.nav-item:hover::after,
+.nav-item:focus-visible::after {
+  transform: scaleX(1);
+}

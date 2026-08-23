@@ -1,0 +1,71 @@
+@theme {
+  /* =========================
+     CORES DA MARCA
+     ========================= */
+
+  --color-ink: #18372f;
+  --color-forest: #12342d;
+
+  --color-sage: #aab9a7;
+  --color-mist: #e6ede2;
+
+  --color-ivory: #f8f5ed;
+  --color-sand: #e9dfcf;
+
+  --color-earth: #8a6048;
+  --color-accent: #bd803c;
+
+  /* =========================
+     SUPERFÍCIES
+     ========================= */
+
+  --color-background: #f8f5ed;
+  --color-surface: #fffdf8;
+  --color-surface-soft: #e6ede2;
+
+  /* =========================
+     TEXTO
+     ========================= */
+
+  --color-text: #18372f;
+  --color-text-soft: #52635c;
+  --color-text-muted: #7b8781;
+
+  /* =========================
+     BORDAS
+     ========================= */
+
+  --color-border: rgba(24, 55, 47, 0.12);
+  --color-border-strong: rgba(24, 55, 47, 0.2);
+
+  /* =========================
+     TIPOGRAFIA
+     ========================= */
+
+  --font-sans: "DM Sans", sans-serif;
+  --font-display: "Fraunces", serif;
+
+  /* =========================
+     RADIUS
+     ========================= */
+
+  --radius-sm: 0.5rem;
+  --radius-md: 0.75rem;
+  --radius-lg: 1rem;
+  --radius-xl: 1.5rem;
+  --radius-2xl: 2rem;
+  --radius-3xl: 3rem;
+  --radius-full: 9999px;
+
+  /* =========================
+     SOMBRAS
+     ========================= */
+
+  --shadow-soft: 0 8px 25px rgba(18, 52, 45, 0.08);
+
+  --shadow-card: 0 15px 35px rgba(18, 52, 45, 0.09);
+
+  --shadow-card-hover: 0 24px 45px rgba(18, 52, 45, 0.13);
+
+  --shadow-xl: 0 20px 50px rgba(18, 52, 45, 0.14);
+}
