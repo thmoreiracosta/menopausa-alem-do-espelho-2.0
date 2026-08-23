@@ -5,6 +5,8 @@ import tailwindcss from "@tailwindcss/vite";
 import { TanStackRouterVite } from "@tanstack/router-plugin/vite";
 
 export default defineConfig({
+  base: "/menopausa-alem-do-espelho-2.0/",
+
   plugins: [
     react(),
     TanStackRouterVite(),
