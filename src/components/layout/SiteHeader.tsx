@@ -1,8 +1,13 @@
-import { Link } from "@tanstack/react-router";
+import { Link, useLocation } from "@tanstack/react-router";
+
 import { Menu, X } from "lucide-react";
+
 import { useEffect, useState } from "react";
+
 import { Logo } from "@/components/brand/Logo";
+
 import { BrandButton } from "@/components/brand/ui-kit";
+
 import { cn } from "@/lib/utils";
 
 export const navItems = [
@@ -19,29 +24,72 @@ export function SiteHeader() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
 
+  const location = useLocation();
+
+  /*
+   * Páginas cujo primeiro bloco possui fundo verde.
+   *
+   * Nessas páginas o logo começa invertido.
+   */
+  const darkBackgroundRoutes = ["/", "/para-mulheres"];
+
+  const hasDarkBackground = darkBackgroundRoutes.includes(
+    location.pathname,
+  );
+
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 24);
+    const onScroll = () => {
+      setScrolled(window.scrollY > 24);
+    };
+
     onScroll();
+
     window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+    };
   }, []);
 
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
+
     return () => {
       document.body.style.overflow = "";
     };
   }, [open]);
 
+  /*
+   * O efeito de rolagem acontece em TODAS as páginas.
+   *
+   * Antes da rolagem:
+   * - fundo verde → logo invertido
+   * - fundo branco → logo normal
+   *
+   * Depois da rolagem:
+   * - sempre logo normal
+   */
+  const logoTone = scrolled
+    ? "default"
+    : hasDarkBackground
+      ? "invert"
+      : "default";
+
   return (
     <header
       className={cn(
         "fixed inset-x-0 top-0 z-50 transition-all duration-400",
-        scrolled ? "bg-background/90 shadow-soft backdrop-blur-xl" : "bg-transparent",
+
+        scrolled
+          ? "bg-background/90 shadow-soft backdrop-blur-xl"
+          : "bg-transparent",
       )}
     >
       <div className="container-editorial grid h-20 grid-cols-[minmax(0,1fr)_auto] items-center gap-4 lg:h-[5.5rem]">
-        <Logo className="min-w-0" />
+        <Logo
+          tone={logoTone}
+          className="min-w-0"
+        />
 
         <div className="flex items-center gap-6">
           <nav className="hidden items-center gap-1 xl:flex">
@@ -56,9 +104,16 @@ export function SiteHeader() {
               </Link>
             ))}
           </nav>
-          <BrandButton to="/contato" size="sm" variant="accent" className="hidden sm:inline-flex">
+
+          <BrandButton
+            to="/contato"
+            size="sm"
+            variant="accent"
+            className="hidden sm:inline-flex"
+          >
             Quero saber mais
           </BrandButton>
+
           <button
             type="button"
             onClick={() => setOpen(true)}
@@ -74,6 +129,7 @@ export function SiteHeader() {
         <div className="fixed inset-0 z-50 flex flex-col bg-primary text-primary-foreground">
           <div className="container-editorial grid h-20 grid-cols-[minmax(0,1fr)_auto] items-center gap-4">
             <Logo tone="invert" className="min-w-0" />
+
             <button
               type="button"
               onClick={() => setOpen(false)}
@@ -83,6 +139,7 @@ export function SiteHeader() {
               <X className="h-5 w-5" />
             </button>
           </div>
+
           <nav className="container-editorial flex flex-1 flex-col justify-center gap-1 overflow-y-auto pb-12">
             {navItems.map((item) => (
               <Link
@@ -94,6 +151,7 @@ export function SiteHeader() {
                 {item.label}
               </Link>
             ))}
+
             <BrandButton
               to="/contato"
               size="lg"

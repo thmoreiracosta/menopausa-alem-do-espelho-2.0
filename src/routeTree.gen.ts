@@ -18,6 +18,8 @@ import { Route as ImersaoRouteImport } from './routes/imersao'
 import { Route as ParaMulheresRouteImport } from './routes/para-mulheres'
 import { Route as ParaProfissionaisRouteImport } from './routes/para-profissionais'
 import { Route as SobreRouteImport } from './routes/sobre'
+import { Route as BlogIndexRouteImport } from './routes/blog/index'
+import { Route as BlogSlugRouteImport } from './routes/blog/$slug'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -64,40 +66,55 @@ const SobreRoute = SobreRouteImport.update({
   path: '/sobre',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BlogIndexRoute = BlogIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => BlogRoute,
+} as any)
+const BlogSlugRoute = BlogSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => BlogRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/artigo': typeof ArtigoRoute
-  '/blog': typeof BlogRoute
+  '/blog': typeof BlogRouteWithChildren
   '/contato': typeof ContatoRoute
   '/ebook': typeof EbookRoute
   '/imersao': typeof ImersaoRoute
   '/para-mulheres': typeof ParaMulheresRoute
   '/para-profissionais': typeof ParaProfissionaisRoute
   '/sobre': typeof SobreRoute
+  '/blog/$slug': typeof BlogSlugRoute
+  '/blog/': typeof BlogIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/artigo': typeof ArtigoRoute
-  '/blog': typeof BlogRoute
   '/contato': typeof ContatoRoute
   '/ebook': typeof EbookRoute
   '/imersao': typeof ImersaoRoute
   '/para-mulheres': typeof ParaMulheresRoute
   '/para-profissionais': typeof ParaProfissionaisRoute
   '/sobre': typeof SobreRoute
+  '/blog/$slug': typeof BlogSlugRoute
+  '/blog': typeof BlogIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/artigo': typeof ArtigoRoute
-  '/blog': typeof BlogRoute
+  '/blog': typeof BlogRouteWithChildren
   '/contato': typeof ContatoRoute
   '/ebook': typeof EbookRoute
   '/imersao': typeof ImersaoRoute
   '/para-mulheres': typeof ParaMulheresRoute
   '/para-profissionais': typeof ParaProfissionaisRoute
   '/sobre': typeof SobreRoute
+  '/blog/$slug': typeof BlogSlugRoute
+  '/blog/': typeof BlogIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -111,17 +128,20 @@ export interface FileRouteTypes {
     | '/para-mulheres'
     | '/para-profissionais'
     | '/sobre'
+    | '/blog/$slug'
+    | '/blog/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/artigo'
-    | '/blog'
     | '/contato'
     | '/ebook'
     | '/imersao'
     | '/para-mulheres'
     | '/para-profissionais'
     | '/sobre'
+    | '/blog/$slug'
+    | '/blog'
   id:
     | '__root__'
     | '/'
@@ -133,12 +153,14 @@ export interface FileRouteTypes {
     | '/para-mulheres'
     | '/para-profissionais'
     | '/sobre'
+    | '/blog/$slug'
+    | '/blog/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ArtigoRoute: typeof ArtigoRoute
-  BlogRoute: typeof BlogRoute
+  BlogRoute: typeof BlogRouteWithChildren
   ContatoRoute: typeof ContatoRoute
   EbookRoute: typeof EbookRoute
   ImersaoRoute: typeof ImersaoRoute
@@ -212,13 +234,39 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SobreRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/blog/': {
+      id: '/blog/'
+      path: '/'
+      fullPath: '/blog/'
+      preLoaderRoute: typeof BlogIndexRouteImport
+      parentRoute: typeof BlogRoute
+    }
+    '/blog/$slug': {
+      id: '/blog/$slug'
+      path: '/$slug'
+      fullPath: '/blog/$slug'
+      preLoaderRoute: typeof BlogSlugRouteImport
+      parentRoute: typeof BlogRoute
+    }
   }
 }
+
+interface BlogRouteChildren {
+  BlogSlugRoute: typeof BlogSlugRoute
+  BlogIndexRoute: typeof BlogIndexRoute
+}
+
+const BlogRouteChildren: BlogRouteChildren = {
+  BlogSlugRoute: BlogSlugRoute,
+  BlogIndexRoute: BlogIndexRoute,
+}
+
+const BlogRouteWithChildren = BlogRoute._addFileChildren(BlogRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ArtigoRoute: ArtigoRoute,
-  BlogRoute: BlogRoute,
+  BlogRoute: BlogRouteWithChildren,
   ContatoRoute: ContatoRoute,
   EbookRoute: EbookRoute,
   ImersaoRoute: ImersaoRoute,

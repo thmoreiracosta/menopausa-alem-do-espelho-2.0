@@ -16,7 +16,7 @@ import {
   Tag,
 } from "@/components/brand/ui-kit";
 
-import { articles } from "@/data/site";
+import { articles } from "@/data/articles";
 
 export const Route = createFileRoute("/para-mulheres")({
   head: () => ({
@@ -40,7 +40,6 @@ export const Route = createFileRoute("/para-mulheres")({
       },
     ],
   }),
-
   component: ParaMulheres,
 });
 
@@ -49,6 +48,10 @@ function ParaMulheres() {
 
   return (
     <main className="min-h-screen">
+      {/* =========================================================
+          HERO
+      ========================================================= */}
+
       <PageHero
         eyebrow="PARA MULHERES"
         title="Menopausa não é o fim. É uma nova fase."
@@ -64,6 +67,10 @@ function ParaMulheres() {
           },
         ]}
       />
+
+      {/* =========================================================
+          CUIDADO INTEGRAL
+      ========================================================= */}
 
       <section className="mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:px-8">
         <SectionHeading
@@ -100,6 +107,10 @@ function ParaMulheres() {
         </div>
       </section>
 
+      {/* =========================================================
+          CONTEÚDO
+      ========================================================= */}
+
       <section className="bg-muted/40">
         <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:px-8">
           <SectionHeading
@@ -127,12 +138,42 @@ function ParaMulheres() {
           </div>
 
           <div className="mt-10 flex justify-center">
-            <BrandButton href="/artigos">
+            <BrandButton
+              to="/blog"
+              withArrow
+            >
               VER TODOS OS ARTIGOS
             </BrandButton>
           </div>
         </div>
       </section>
+
+      {/* =========================================================
+          FUTURO — PRODUTOS
+      ========================================================= */}
+
+      <section className="mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:px-8">
+        <SectionHeading
+          eyebrow="EM BREVE"
+          title="Mais possibilidades para acompanhar essa nova fase."
+          description="Estamos construindo um espaço com produtos e soluções selecionados para mulheres que desejam cuidar de si com mais informação, autonomia e qualidade."
+          align="center"
+        />
+
+        <div className="mt-8 flex justify-center">
+          <BrandButton
+            to="/produtos"
+            variant="outline"
+            withArrow
+          >
+            CONHECER PRODUTOS
+          </BrandButton>
+        </div>
+      </section>
+
+      {/* =========================================================
+          CTA
+      ========================================================= */}
 
       <section className="mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:px-8">
         <CtaBand
