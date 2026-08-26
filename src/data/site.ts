@@ -1,8 +1,12 @@
-import { articles } from "./articles";
+import {
+  articles,  
+} from "./articles";
 
 export type { ArticleBlock, Article } from "./articles";
 
-export { articles };
+export {
+  articles,  
+};
 
 export const categories = [
   "Mulheres",

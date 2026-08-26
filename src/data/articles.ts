@@ -33,6 +33,7 @@ export type Article = {
   title: string;
   seoTitle: string;
   description: string;
+  excerpt: string;
   category: string;
   readTime: string;
   image: string;
@@ -41,7 +42,7 @@ export type Article = {
   blocks: ArticleBlock[];
 };
 
-export const articles: Article[] = [
+const articlesWithoutExcerpt: Omit<Article, "excerpt">[] = [
   {
     slug: "o-que-e-menopausa",
     title: "O que é menopausa?",
@@ -996,6 +997,12 @@ export const articles: Article[] = [
     ],
   },
 ];
+
+export const articles: Article[] = articlesWithoutExcerpt.map((article) => ({
+  ...article,
+  excerpt: article.description,
+}));
+
 
 export function getArticleBySlug(slug: string): Article | undefined {
   return articles.find((article) => article.slug === slug);

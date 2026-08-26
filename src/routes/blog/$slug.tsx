@@ -1,4 +1,5 @@
 import React from "react";
+
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 
 import {
@@ -9,7 +10,12 @@ import {
   List,
 } from "lucide-react";
 
-import { articles, getRelatedArticles } from "@/data/articles";
+import {
+  articles,
+  getRelatedArticles,
+  type ArticleBlock,
+} from "@/data/articles";
+
 import { Tag } from "@/components/brand/ui-kit";
 
 export const Route = createFileRoute("/blog/$slug")({
@@ -116,93 +122,95 @@ function ArticlePage() {
       <article className="container-editorial py-16 lg:py-24">
         <div className="mx-auto max-w-3xl">
           <div className="mb-12 flex flex-wrap gap-2">
-            {article.tags.map((tag) => (
+            {article.tags.map((tag: string) => (
               <Tag key={tag}>{tag}</Tag>
             ))}
           </div>
 
           <div className="space-y-8">
-            {article.blocks.map((block, index) => {
-              switch (block.type) {
-                case "paragraph":
-                  return (
-                    <p
-                      key={index}
-                      className="text-lg leading-[1.9] text-foreground/80"
-                    >
-                      {block.text}
-                    </p>
-                  );
+            {article.blocks.map(
+              (block: ArticleBlock, index: number) => {
+                switch (block.type) {
+                  case "paragraph":
+                    return (
+                      <p
+                        key={index}
+                        className="text-lg leading-[1.9] text-foreground/80"
+                      >
+                        {block.text}
+                      </p>
+                    );
 
-                case "heading":
-                  return (
-                    <h2
-                      key={index}
-                      className="pt-8 text-3xl font-bold leading-tight tracking-tight text-primary sm:text-4xl"
-                    >
-                      {block.text}
-                    </h2>
-                  );
+                  case "heading":
+                    return (
+                      <h2
+                        key={index}
+                        className="pt-8 text-3xl font-bold leading-tight tracking-tight text-primary sm:text-4xl"
+                      >
+                        {block.text}
+                      </h2>
+                    );
 
-                case "quote":
-                  return (
-                    <blockquote
-                      key={index}
-                      className="my-10 border-l-4 border-cyan bg-secondary/60 px-6 py-6 text-xl font-semibold italic leading-relaxed text-primary sm:px-8"
-                    >
-                      {block.text}
-                    </blockquote>
-                  );
+                  case "quote":
+                    return (
+                      <blockquote
+                        key={index}
+                        className="my-10 border-l-4 border-cyan bg-secondary/60 px-6 py-6 text-xl font-semibold italic leading-relaxed text-primary sm:px-8"
+                      >
+                        {block.text}
+                      </blockquote>
+                    );
 
-                case "list":
-                  return (
-                    <ul
-                      key={index}
-                      className="space-y-4 rounded-2xl bg-secondary/50 p-6 sm:p-8"
-                    >
-                      {block.items.map((item) => (
-                        <li
-                          key={item}
-                          className="flex items-start gap-3 text-lg leading-relaxed text-foreground/80"
-                        >
-                          <span className="mt-1 grid h-6 w-6 shrink-0 place-items-center rounded-full bg-cyan/15 text-teal">
-                            <Check className="h-4 w-4" />
-                          </span>
+                  case "list":
+                    return (
+                      <ul
+                        key={index}
+                        className="space-y-4 rounded-2xl bg-secondary/50 p-6 sm:p-8"
+                      >
+                        {block.items.map((item: string) => (
+                          <li
+                            key={item}
+                            className="flex items-start gap-3 text-lg leading-relaxed text-foreground/80"
+                          >
+                            <span className="mt-1 grid h-6 w-6 shrink-0 place-items-center rounded-full bg-cyan/15 text-teal">
+                              <Check className="h-4 w-4" />
+                            </span>
 
-                          <span>{item}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  );
+                            <span>{item}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    );
 
-                case "highlight":
-                  return (
-                    <div
-                      key={index}
-                      className="my-12 overflow-hidden rounded-3xl bg-primary p-8 text-primary-foreground shadow-soft sm:p-10"
-                    >
-                      <div className="flex items-start gap-4">
-                        <div className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-cyan text-petrol-deep">
-                          <List className="h-5 w-5" />
-                        </div>
+                  case "highlight":
+                    return (
+                      <div
+                        key={index}
+                        className="my-12 overflow-hidden rounded-3xl bg-primary p-8 text-primary-foreground shadow-soft sm:p-10"
+                      >
+                        <div className="flex items-start gap-4">
+                          <div className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-cyan text-petrol-deep">
+                            <List className="h-5 w-5" />
+                          </div>
 
-                        <div>
-                          <h3 className="text-xl font-bold">
-                            {block.title}
-                          </h3>
+                          <div>
+                            <h3 className="text-xl font-bold">
+                              {block.title}
+                            </h3>
 
-                          <p className="mt-3 leading-relaxed text-primary-foreground/75">
-                            {block.text}
-                          </p>
+                            <p className="mt-3 leading-relaxed text-primary-foreground/75">
+                              {block.text}
+                            </p>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  );
+                    );
 
-                default:
-                  return null;
-              }
-            })}
+                  default:
+                    return null;
+                }
+              },
+            )}
           </div>
 
           {/* ENQUETE */}
@@ -225,7 +233,7 @@ function ArticlePage() {
             </div>
 
             <div className="mt-10 grid gap-6 md:grid-cols-3">
-              {relatedArticles.map((related) => (
+              {relatedArticles.map((related: typeof articles[number]) => (
                 <Link
                   key={related.slug}
                   to="/blog/$slug"
@@ -282,7 +290,9 @@ function ArticlePoll({
 }: {
   article: (typeof articles)[number];
 }) {
-  const [selected, setSelected] = React.useState<string | null>(null);
+  const [selected, setSelected] = React.useState<string | null>(
+    null,
+  );
 
   const options = article.tags.slice(0, 5);
 
@@ -304,7 +314,7 @@ function ArticlePoll({
       </div>
 
       <div className="mt-7 grid gap-3 sm:grid-cols-2">
-        {options.map((option) => {
+        {options.map((option: string) => {
           const active = selected === option;
 
           return (
