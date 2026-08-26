@@ -1,9 +1,9 @@
 import cardWoman from "@/assets/card-woman.jpg";
 import strength from "@/assets/strength.jpg";
 import mobility from "@/assets/mobility.jpg";
+import nutrition from "@/assets/nutrition.jpg";
 import sleep from "@/assets/sleep.jpg";
 import walkOutdoor from "@/assets/walk-outdoor.jpg";
-import nutrition from "@/assets/nutrition.jpg";
 
 export type ArticleBlock =
   | {
@@ -997,7 +997,7 @@ export const articles: Article[] = [
   },
 ];
 
-export function getArticleBySlug(slug: string) {
+export function getArticleBySlug(slug: string): Article | undefined {
   return articles.find((article) => article.slug === slug);
 }
 
@@ -1005,7 +1005,7 @@ export function getRelatedArticles(
   currentSlug: string,
   tags: string[],
   limit = 3,
-) {
+): Article[] {
   return articles
     .filter((article) => article.slug !== currentSlug)
     .map((article) => ({
